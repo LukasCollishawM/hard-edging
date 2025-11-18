@@ -54,13 +54,20 @@ The web is full of frameworks that “scale” by pushing more logic into more r
 - What if “edge runtime” just meant *other people’s laptops*?
 - What if the path of least resistance for a byte was **across the room**, not across an ocean?
 
+And then it keeps going:
+
+- Why is every conversation about “cost” quietly a conversation about **your** egress bill and **their** margins?
+- How did we end up paying rent on our own bytes, every month, forever?
+- At what point did “edge” stop meaning *near the user* and start meaning “near a shareholder presentation”?
+
 Hard‑Edging exists to:
 
 - Reduce backend egress to the absolute minimum that reality, compliance, and common sense demand
 - Push computation to the “real edge”: the client, the tab, the forgotten browser window
-- Force developers to confront the uncomfortable truth: users’ machines are more than capable, and occasionally more over‑provisioned than your staging cluster
+- Treat your users’ browsers as a cooperatively over‑provisioned cluster, not as consumers of a “content delivery experience”
+- Give you a framework that is simultaneously **useful**, **ridiculous**, and **uncomfortably honest** about where the bandwidth is really coming from
 
-It’s a little absurd, but so is shipping 300 KB of JavaScript to re‑render static text. At least this absurdity buys you something: fewer bytes leaving your infrastructure, and more interesting conversations in your post‑mortems.
+It’s a little absurd, but so is shipping 300 KB of JavaScript to re‑render static text. At least this absurdity buys you something: fewer bytes leaving your infrastructure, more visible peer‑to‑peer flows, and more interesting conversations in your post‑mortems and procurement meetings.
 
 ## Getting Started
 
@@ -77,19 +84,42 @@ cd my-mesh-app
 hard-edging dev
 ```
 
-### Example usage:
+### Example: React + Mesh Inspector
 
-```javascript
-import { p2p, doc } from "hard-edging";
+```tsx
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { HardEdgingProvider, MeshInspector, useMesh } from '@hard-edging/react';
 
-// shared text document synced P2P
-const notes = doc("notes");
+function EdgeStatus() {
+  const { peers, stats } = useMesh();
+  const total = stats.bytesSentP2P + stats.bytesReceivedP2P + stats.bytesFromOrigin;
+  const edgePercent =
+    total === 0 ? 0 : Math.round(((stats.bytesSentP2P + stats.bytesReceivedP2P) / total) * 100);
 
-// broadcast a message to all connected peers
-p2p.broadcast("chat", { text: "Hello from the edge!" });
+  return (
+    <section>
+      <h2>Edge Saturation</h2>
+      <p>{edgePercent}% of bytes served P2P (approximate).</p>
+      <p>Connected peers: {peers.length}</p>
+    </section>
+  );
+}
 
-// react to incoming messages
-p2p.on("chat", msg => console.log("Peer says:", msg.text));
+function App() {
+  return (
+    <HardEdgingProvider>
+      <main>
+        <h1>Hard-Edging Minimal App</h1>
+        <p>Your tabs are now a distributed system. Please use responsibly.</p>
+        <EdgeStatus />
+      </main>
+      <MeshInspector />
+    </HardEdgingProvider>
+  );
+}
+
+createRoot(document.getElementById('root')!).render(<App />);
 ```
 
 ## Example Apps
@@ -174,6 +204,23 @@ This package gives you tools to describe **what data is allowed to escape the cu
 
 Where the rest of Hard‑Edging is about moving bytes freely, `@hard-edging/privacy` is about deciding which bytes deserve a quieter life.
 
+## Frequently asked (answers left as an exercise to the reader)
+
+- **Is this serious?**
+- **Will this reduce my cloud bill?**
+- **Will this increase my users' bill?**
+- **Is this basically running a tiny CDN cult in my users' browsers?**
+- **Will legal be mad?**
+- **Will security be mad?**
+- **Do I need to tell anyone I'm doing this?**
+- **What happens if a peer disappears mid-transfer?**
+- **Can I use this for production?**
+- **Should I use this for production?**
+- **Is this compatible with corporate “zero trust” networking policies?**
+- **What does my compliance team need to sign off on?**
+
+The answers are left as an exercise to the reader.
+
 ## Disclaimer
 
 Yes, we know this probably isn't the most cost-effective framework in reality.
@@ -189,4 +236,6 @@ But it works. And that's the fun part.
 **Hard-Edging: Give your users the full edge experience.**
 
 The real edge isn't in the cloud — it's in the browser, pumping your users full of data, CPU, and mild regret.
+
+*** End of File
 
