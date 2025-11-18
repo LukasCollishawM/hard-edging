@@ -44,8 +44,6 @@ It is an attempt at:
 - **bandwidth asceticism\*** – origin only when the mesh genuinely cannot help
 - **meshocratic deployment\*** – whoever already has the asset “wins”
 
-If this sounds a little unhinged, that is correct. So is paying rent on the same bytes, every month, forever.
-
 ---
 
 ## Core ideas (philosophy hiding inside jokes)
