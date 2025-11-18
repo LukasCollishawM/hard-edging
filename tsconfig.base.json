@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "sourceMap": true,
+    "isolatedModules": true,
+    "noEmitOnError": true,
+    "baseUrl": ".",
+    "lib": ["ES2020", "DOM"],
+    "paths": {
+      "@hard-edging/core": ["packages/core/src"],
+      "@hard-edging/webrtc": ["packages/webrtc/src"],
+      "@hard-edging/privacy": ["packages/privacy/src"],
+      "@hard-edging/broker": ["packages/broker/src"],
+      "@hard-edging/react": ["packages/react/src"],
+      "@hard-edging/testing": ["packages/testing/src"]
+    }
+  }
+}
+
+

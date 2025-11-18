@@ -1,0 +1,21 @@
+{
+  "name": "@hard-edging/testing",
+  "version": "0.0.1",
+  "description": "Testing utilities for Hard-Edging (Vitest + Playwright harnesses).",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.48.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vitest": "^2.0.0"
+  }
+}
+
+

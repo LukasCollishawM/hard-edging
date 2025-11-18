@@ -1,0 +1,26 @@
+{
+  "name": "@hard-edging/broker",
+  "version": "0.0.1",
+  "description": "Hard-Edging Node.js broker server for signalling, auth, and room membership.",
+  "main": "dist/server.cjs",
+  "module": "dist/server.mjs",
+  "types": "dist/server.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "start": "node dist/server.cjs"
+  },
+  "dependencies": {
+    "@fastify/static": "^8.0.0",
+    "ws": "^8.18.0",
+    "fastify": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.5.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.0.0"
+  }
+}
+
+

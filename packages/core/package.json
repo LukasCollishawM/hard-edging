@@ -1,0 +1,21 @@
+{
+  "name": "@hard-edging/core",
+  "version": "0.0.1",
+  "description": "Hard-Edging core runtime: shared types and P2P-first asset orchestration so your origin behaves like a reluctant fallback.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hard-edging/webrtc": "0.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vitest": "^2.0.0"
+  }
+}
+
+

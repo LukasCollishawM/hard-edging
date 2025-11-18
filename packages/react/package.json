@@ -1,0 +1,26 @@
+{
+  "name": "@hard-edging/react",
+  "version": "0.0.1",
+  "description": "React bindings for Hard-Edging: providers, hooks, and devtools.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "dependencies": {
+    "@hard-edging/core": "0.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@testing-library/react": "^16.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.0.0"
+  }
+}
+
+
