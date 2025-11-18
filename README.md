@@ -1,6 +1,8 @@
 # Hard-Edging
 
-Edge your users so your cloud bill does not have to.
+Edge your users so you can pay your bills.*
+
+__afford your cloud egress bills__
 
 > The edge is wherever two browsers decide to share.
 
