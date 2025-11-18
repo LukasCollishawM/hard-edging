@@ -259,7 +259,7 @@ Where the rest of Hard-Edging is about letting bytes move freely, this part is a
 
 ---
 
-## Frequently asked (answers left to you)
+## Frequently asked questions
 
 - Is this serious?
 - Will this reduce my cloud bill?
@@ -275,7 +275,7 @@ Where the rest of Hard-Edging is about letting bytes move freely, this part is a
 - What does my compliance team need to sign off on?
 - Is this secretly an experiment in mesh‑based social features with plausible deniability?
 
-The answers are left as an exercise to the reader (and, possibly, to their lawyer).
+The answers are left as an exercise to the reader.
 
 ---
 
