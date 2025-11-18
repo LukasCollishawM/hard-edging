@@ -1,237 +1,285 @@
 # Hard-Edging
 
-Give your users the full edging experience, with a faintly antediluvian* respect for the browser.
+Edge your users so your cloud bill does not have to.
 
-## What is Hard-Edging?
+> The edge is wherever two browsers decide to share.
 
-Hard-Edging is a peer‑first web framework that treats browsers as first‑class infrastructure, not passive document viewers. Code, state, assets, and occasionally dignity are pushed to the very edge of the network: your users’ machines.
+Hard-Edging is a peer‑first web framework where **every front‑end asset tries to come from another user before it comes from you**:
 
-Instead of worshipping at the altar of “infinite cloud scale”, Hard‑Edging quietly asks: *what if the scale was already sitting in front of you, running a tab‑hoarding Chromium fork at 3am?*
+- HTML shells
+- JS bundles and chunks
+- CSS
+- images, fonts, emoji sheets
+- videos, JSON blobs, whatever else you keep apologising for in performance reviews
 
-Backend egress is something to be negotiated with, not celebrated. Less “global platform”, more “neighbourhood watch for bytes”.
+Your server is still there, somewhere, behaving itself as:
 
-> “The edge is wherever your users are willing to share their bandwidth.” - someone who has seen a bill
+- a signalling point for WebRTC
+- a reluctant source of “truth” when the mesh fails
+- a place to put secrets that would otherwise wander off into the gossip
 
-## Core Philosophy
+But the real work happens in the browsers, staring at each other across the network like slightly overcommitted houseplants, trading assets and state.
 
-### All traffic is P2P (including assets)
+---
 
-Messages, files, documents, even multiplayer game state flow directly between clients. Hard‑Edging treats your visitors like a living mesh for **HTML shells, JS bundles, CSS, images, fonts, and media**: all are eligible to be fetched from peers first.
+## Why this exists (and why it probably should not)
 
-The server exists as a broker for private info, a signalling hub for WebRTC, and a reluctant fallback for assets that nobody else has. It’s the quiet adult in the room, not the star of the show.
+If you have worked on the web long enough, you have had this conversation:
 
-### Backend egress must be *earned*
+> “We can reduce costs by introducing a new edge layer in front of the other edge layer that fronts the origin layer which proxies the real origin.”
 
-Hard‑Edging is about maximizing client‑to‑client bandwidth, even if it costs your users a few extra fan cycles. Any byte served from origin is treated as a small failure of edge saturation, a reminder that the mesh still has room to grow.
+At some point you realise the “edge” is less about physics and more about billing. The packets are going where they always went; you are simply paying different people to care.
 
-### User sacrifice is expected
+Hard-Edging suggests a different thought experiment:
 
-Their CPU, bandwidth, and patience will carry your apps. Think of it as community‑powered edge computing with a vaguely spiritual belief that **latency is temporary, but egress bills are eternal**.
+- What if the **cluster** was the user agents you already have?
+- What if “edge runtime” just meant *other people’s laptops*?
+- What if the shortest path for a byte was **across the room**, not across an ocean?
 
-### Optional private storage
+It is an attempt at:
 
-If you really must store private data, the server will reluctantly handle it. Otherwise, Hard-Edging keeps everything in the mesh, where it belongs.
+- **egress‑driven development (EDD)\*** – start with the bill, then draw the architecture
+- **bandwidth asceticism\*** – origin only when the mesh genuinely cannot help
+- **meshocratic deployment\*** – whoever already has the asset “wins”
 
-### Gratitude is opt-in, not automatic
+If this sounds a little unhinged, that is correct. So is paying rent on the same bytes, every month, forever.
 
-When a peer serves you an asset (when they "edge" you), Hard-Edging does not automatically send thank-you messages. Instead, you get prompts and buttons to explicitly acknowledge peers who have shared with you. The Mesh Inspector tracks peer credits: who served you what, how many bytes, and when. You decide when to click "Send thanks".
+---
 
-You can trigger these prompts however you want: after hovering over an asset for a while, when you notice you keep requesting the same file, or just when you feel like acknowledging someone's contribution. When you send thanks, the peer receives a notification. If you keep thanking the same peer repeatedly, well, maybe the mesh is trying to tell you something about your connection.
+## Core ideas (philosophy hiding inside jokes)
 
-## Features
+### 1. The browser is infrastructure
 
-- Automatic peer discovery and mesh formation
-- Real-time P2P messaging and data syncing
-- CRDT-based local-first storage for collaborative apps
-- Minimal backend: mostly signaling, auth, and optional private data, plus the occasional reality check
-- Hot-reload dev server with P2P debugging tools
-- APIs that try to be understandable without a three-part explainer video
-- **Peer acknowledgment system**: Mesh Inspector shows who has served you assets and lets you send explicit, opt-in thanks (with visible credits) when you actually feel like it
+Browsers are no longer “clients” in any meaningful sense. They are:
 
-## Motivation
+- multi‑core, multi‑gigabyte execution environments
+- distributed storage nodes with surprisingly loyal local caches
+- more geographically diverse than any region list in a cloud console
 
-The web is full of frameworks that "scale" by pushing more logic into more regions behind more dashboards. Hard‑Edging asks a weirder question:
+Hard-Edging treats them that way. Each browser:
 
-- What if the real cluster was the browsers you already have?
-- What if "edge runtime" just meant *other people's laptops*?
-- What if the path of least resistance for a byte was **across the room**, not across an ocean?
+- joins a **room** via a tiny broker
+- forms WebRTC data channels with peers
+- requests and serves assets over those channels
+- falls back to origin only when the mesh is asleep, shy, or firewalled
 
-And then it keeps going:
+The CDN is, in a sense, whatever group of strangers currently has your tab open.
 
-- Why is every conversation about "cost" quietly a conversation about **your** egress bill and **their** margins?
-- How did we end up paying rent on our own bytes, every month, forever?
-- At what point did “edge” stop meaning *near the user* and start meaning “near a shareholder presentation”?
+### 2. Backend egress must be earned
 
-In more grandiloquent* terms, Hard‑Edging is an experiment in egress-driven development (EDD)* and bandwidth asceticism*. It assumes at least one person in your organisation is sufficiently perspicacious* to notice where the money is actually leaking.
+Every byte from origin is a small confession: *the mesh was not ready yet*.
 
-Hard‑Edging exists to:
+Hard-Edging tries very hard to:
 
-- Reduce backend egress to the absolute minimum that reality, compliance, and common sense demand
-- Push computation to the “real edge”: the client, the tab, the forgotten browser window
-- Treat your users’ browsers as a cooperatively over‑provisioned cluster, not as consumers of a “content delivery experience”
-- Give you a framework that is simultaneously **useful**, **ridiculous**, and **uncomfortably honest** about where the bandwidth is really coming from
-- Provide just enough browser‑cooperative edge consensus* that you can say “distributed system” in meetings without blushing
+- seed assets into peers once they are fetched
+- route subsequent requests through those peers
+- measure how often it succeeded, and how much you “cheated” by going back to origin
 
-For the historically inclined, the precise sequence of commits that led here has been tastefully blurred into meshocratic deployment* and squashed historiography*. This is for your protection and ours.
+You can still build normal apps with it. You just have to live with the knowledge that, every time you hit the origin, some imaginary accountant somewhere sighs.
 
-It is a little absurd, but so is shipping 300 KB of JavaScript to re‑render static text. At least this absurdity buys you something: fewer bytes leaving your infrastructure, more visible peer‑to‑peer flows, and more interesting conversations in your post‑mortems and procurement meetings.
+### 3. User sacrifice is assumed (but consensual)
 
-## Getting Started
+Your users’ machines are absurdly overprovisioned for the average marketing site:
+
+- many cores
+- many gigabytes
+- many, many idle tabs
+
+Hard-Edging politely volunteers them for light CDN duty:
+
+- **CPU**: doing some extra crypto and compression
+- **bandwidth**: serving assets to nearby peers
+- **attention**: occasionally being asked whether they would like to thank a particularly generous peer
+
+If this feels exploitative, remember: the same machines are already rendering three separate client‑side routers and a partridge in a component tree.
+
+### 4. Gratitude is opt‑in, awkward, and human
+
+When a peer serves you an asset (when they “edge” you), Hard-Edging **does not** automatically send thank‑you messages. There is no invisible stream of fake gratitude packets rushing around the mesh.
+
+Instead:
+
+- the Mesh Inspector shows you which peers have been feeding you assets
+- you can choose to send a thank‑you to a specific peer
+- the peer receives a small notification: a gentle “someone noticed you”
+
+You can trigger thank prompts however you like:
+
+- after hovering over a particular asset for longer than is strictly professional
+- when you realise you keep requesting the same file from the same peer
+- when your internal narrative explains this as “debugging the mesh” and not “finding an excuse to click their peer id again”
+
+The system provides the mechanism; you provide the meaning. Any resemblance to dating apps is, of course, purely coincidental and definitely not a design goal.
+
+---
+
+## What do you actually get?
+
+### From 10,000 meters (or several network hops)
+
+- **P2P‑first asset delivery** for all front‑end assets (HTML shell + JS + CSS + static assets + JSON)
+- A **minimal broker** (Node + WebSocket) for signalling and last‑resort fallback
+- A **mesh runtime** (WebRTC data channels) that knows how to:
+  - ask peers for an asset
+  - serve assets it already has
+  - track who is quietly doing all the work
+- A **React binding** that makes this feel like normal state and hooks instead of a DIY signalling project
+- A **Mesh Inspector** devtool that shows:
+  - connected peers
+  - bytes from origin vs bytes from peers
+  - which peers have “edged” you the most
+  - buttons for sending thanks when the spirit moves you
+
+### From a terminal
 
 ```bash
-# Install Hard-Edging CLI
-npm install -g hard-edging
+# Install (locally is fine)
+npm install
 
-# Create a new Hard-Edging project
-hard-edging init my-mesh-app
+# From the monorepo root, create a sample app
+cd packages/cli
+node dist/index.js init my-mesh-app
 
-cd my-mesh-app
+cd ../../my-mesh-app
+npm install
 
-# Start the dev server with built-in signaling
-hard-edging dev
+# Start broker + Vite dev server together
+npm run dev
 ```
 
-### Example: React + Mesh Inspector
+Then open the app in a few browsers (incognito works well), watch the Mesh Inspector, and see how quickly you start rooting for some random `peer_m7k3x...` as if they were your own tiny edge node.
 
-```tsx
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { HardEdgingProvider, MeshInspector, useMesh } from '@hard-edging/react';
+---
 
-function EdgeStatus() {
-  const { peers, stats } = useMesh();
-  const total = stats.bytesSentP2P + stats.bytesReceivedP2P + stats.bytesFromOrigin;
-  const edgePercent =
-    total === 0 ? 0 : Math.round(((stats.bytesSentP2P + stats.bytesReceivedP2P) / total) * 100);
+## Features (in plain-ish language)
 
-  return (
-    <section>
-      <h2>Edge Saturation</h2>
-      <p>{edgePercent}% of bytes served P2P (approximate).</p>
-      <p>Connected peers: {peers.length}</p>
-    </section>
-  );
-}
+- **Peer‑to‑peer asset sharing**  
+  Assets are requested from other browsers first, with origin as a fallback. Yes, even for “boring” things like CSS and JSON.
 
-function App() {
-  return (
-    <HardEdgingProvider>
-      <main>
-        <h1>Hard-Edging Minimal App</h1>
-        <p>Your tabs are now a distributed system. Please use responsibly.</p>
-        <EdgeStatus />
-      </main>
-      <MeshInspector />
-    </HardEdgingProvider>
-  );
-}
+- **Minimal but real backend**  
+  A small Node broker handles rooms, peer lists, and WebRTC signalling. It can also serve assets directly when the mesh is blocked or empty.
 
-createRoot(document.getElementById('root')!).render(<App />);
+- **React integration**  
+  A `HardEdgingProvider`, hooks like `useMesh` and `useAsset`, and a `MeshInspector` overlay that lets you stare directly into the heart of your offloaded egress.
+
+- **Privacy annotations**  
+  Tools to mark data as `shareable`, `private`, or `room-local`, and runtime checks that grumble when you try to leak the wrong thing.
+
+- **Gratitude system**  
+  Mesh Inspector shows which peers have served you assets and gives you a button to send explicit, opt‑in thanks. The protocol is technical; the gesture is not.
+
+- **Dev‑time observability**  
+  Live stats for:
+  - bytes from peers vs origin
+  - connected peers
+  - who is doing the serving vs who is sipping through the straw
+
+---
+
+## A more honest pitch
+
+If you want:
+
+- a battle‑tested, enterprise‑ready framework with strong vendor backing and a polished story for every acronym
+
+you probably already know what to install.
+
+Hard-Edging is for when you want to:
+
+- see how far you can push “users as infra” before someone tells you to stop
+- feel a tiny jolt of joy when a new tab appears in the peer list and immediately starts handing out assets
+- explore what “edge” might mean if you trusted your users more than your dashboards
+
+It is satire, but it is **functional** satire: the packets are real; the bandwidth graphs move; the fans spin up at 3am somewhere that is not your data center.
+
+---
+
+## Packages (for when curiosity wins)
+
+Under the hood, the monorepo is split into a few small packages. You do not have to think about them if you do not want to, but they are there when you get curious.
+
+### `@hard-edging/core`
+
+The core runtime: types, configuration, and the client that decides whether to ask peers or go back to origin. It is the bit that turns:
+
+```ts
+const client = new AssetClient();
+const { response } = await client.fetchP2PFirst('/demo-large.json');
 ```
 
-## Example Apps
+into a polite sequence of “anyone have this?” followed by “fine, I will get it myself” when necessary.
 
-- Collaborative editors
-- Multiplayer turn-based games
-- Real-time chat apps
-- Anything else you want to offload to your users' devices, from dashboards to deeply quotidian* CRUD
+### `@hard-edging/webrtc`
 
-## Frequently asked (answers left as an exercise to the reader)
+The mesh brain:
 
-- **Is this serious?**
-- **Will this reduce my cloud bill?**
-- **Will this increase my users' bill?**
-- **Is this basically running a tiny CDN cult in my users' browsers?**
-- **Will legal be mad?**
-- **Will security be mad?**
-- **Do I need to tell anyone I am doing this?**
-- **What happens if a peer disappears mid-transfer?**
-- **Can I use this for production?**
-- **Should I use this for production?**
-- **Is this compatible with corporate “zero trust” networking policies?**
-- **What does my compliance team need to sign off on?**
-- **Is this tab-sourced CDN cosplay*?**
+- connects peers via WebRTC
+- routes asset requests over data channels
+- tracks bytes sent/received and which peer helped whom
 
-The answers are left as an exercise to the reader.
+It does not try to be a video platform or SFU; it just wants your script bundle to make some friends.
 
-## Packages
+### `@hard-edging/react`
 
-Hard-Edging is organized as a monorepo of focused packages, each responsible for a specific layer of the mesh. Think of it as meshocratic deployment* for people who still like `package.json`.
+React bindings and devtools:
 
-### @hard-edging/core
+- `HardEdgingProvider` – bootstraps the client + service worker
+- `useMesh` – live view of peers and stats
+- `MeshInspector` – full‑screen overlay that turns your app into a small observatory for network karma
 
-Hard-Edging core runtime: shared types, CRDT-backed documents, and the basic wiring needed to let your users' browsers do the hard work while your servers stay suspiciously idle.
+### `@hard-edging/cli`
 
-Think of this package as the **grammar of the mesh**: IDs, configs, asset descriptors, and the logic that decides whether a byte should take the long way (origin) or the short way (some other tab that already suffered for it).
+The CLI that does the boring wiring:
 
-Instead of assuming "there will be a CDN", `@hard-edging/core` assumes there will be **other people**: other peers, other event loops, other machines willing to cache and forward your assets because they happened to be there first.
+- scaffolds a minimal mesh‑ready app
+- starts the broker and Vite dev server together
 
-### @hard-edging/webrtc
+So you spend your time staring at the mesh instead of your own `child_process.spawn` calls.
 
-WebRTC mesh management and signalling helpers for Hard-Edging. This package is responsible for wiring browsers directly together so that "the network" stops being an abstract cloud and starts being the other tabs you forgot you had open.
+### `@hard-edging/broker`
 
-`@hard-edging/webrtc` handles:
+The broker server:
 
-- Signalling via the broker
-- Peer connection lifecycle (`RTCPeerConnection` and data channels)
-- Asset request/response routing over reliable data channels
-- Simple metrics, so you can see who's doing the sharing and who's freeloading
+- WebSocket signalling for peers
+- room membership and peer lists
+- optional static asset serving as an authoritative fallback
 
-It doesn't try to be a video stack or a full SFU. It just wants to make sure that when one browser has already paid the cost for an asset, the others can politely ask for a copy.
+It is intentionally small and slightly bored. Its job is to introduce browsers and then get out of the way.
 
-### @hard-edging/react
+### `@hard-edging/privacy`
 
-React bindings for Hard-Edging: providers, hooks, and devtools that let you build peer-first UIs without thinking about WebRTC handshakes on every render.
+The voice in your head that says “maybe do not send that”.
 
-This package gives you:
+- lets you annotate data as `shareable`, `private`, or `room-local`
+- enforces those annotations at runtime before anything leaves the tab
 
-- `HardEdgingProvider` to bootstrap the mesh and service worker
-- Hooks like `useMesh`, `useAsset`, and `usePrivacyBoundary` to make P2P feel like ordinary React state
-- A Mesh Inspector overlay that turns your app into a small observatory for bandwidth karma
+Where the rest of Hard-Edging is about letting bytes move freely, this part is about admitting that some bytes deserve a quieter life.
 
-State is designed to flow **horizontally** between peers first. The server plays the role of quiet librarian and emergency archivist, not omnipresent storyteller.
+---
 
-### @hard-edging/cli
+## Frequently asked (answers left to you)
 
-The `hard-edging` CLI scaffolds and runs Hard-Edging applications. It wires together Vite, the broker, and your mesh so you can focus on writing components instead of hand‑stitching dev servers and signalling layers every weekend.
+- Is this serious?
+- Will this reduce my cloud bill?
+- Will this increase my users' bill?
+- Is this basically running a tiny CDN cult in my users' browsers?
+- Will legal be mad?
+- Will security be mad?
+- Do I need to tell anyone I am doing this?
+- What happens if a peer disappears mid‑transfer?
+- Can I use this for production?
+- Should I use this for production?
+- Is this compatible with corporate “zero trust” networking policies?
+- What does my compliance team need to sign off on?
+- Is this secretly an experiment in mesh‑based social features with plausible deniability?
 
-Use it to:
+The answers are left as an exercise to the reader (and, possibly, to their lawyer).
 
-- `init` new projects with a mesh‑ready template
-- `dev` to start the broker + Vite in one go
-- `build` to produce production bundles
-- `mesh-inspect` (future) to introspect what your peers are actually doing
-
-In a sense, the CLI is the ritual that turns a normal app into a peer‑to‑peer organism. One command, and suddenly your local tabs are negotiating amongst themselves.
-
-### @hard-edging/broker
-
-The Hard-Edging broker is a minimal Node.js runtime responsible for signalling, authentication, and room membership. It's the polite introducer at a party: it gets peers talking to each other and then steps back out of the conversation.
-
-Responsibilities:
-
-- Accept WebSocket connections from browsers
-- Manage rooms and peer lists
-- Relay WebRTC offers/answers/candidates between peers
-- Optionally serve static assets as a last‑resort authoritative source
-
-It's deliberately small in scope. The philosophy is simple: **coordinate, don't dominate**. Let the browsers carry the actual content once they've met.
-
-### @hard-edging/privacy
-
-Privacy annotations, schemas, and leak detection for Hard-Edging. It exists to make sure that when you say "share this", you really mean it - and when you do not, the mesh respects that boundary.
-
-This package gives you tools to describe **what data is allowed to escape the current browser**, and in which direction:
-
-- Mark data as `shareable`, `private`, or `room-local`
-- Enforce those policies at runtime before anything leaves the tab
-- Log suspicious flows so you can debug "why did this ever leave my machine?"
-
-Where the rest of Hard‑Edging is about moving bytes freely, `@hard-edging/privacy` is about deciding which bytes deserve a quieter life.
+---
 
 ## Disclaimer
 
-Yes, we know this probably is not the most cost-effective framework in reality.
+Yes, we know this is not the most cost‑effective framework in some abstract sense.
 
 Yes, your users' bandwidth and CPU may silently resent you.
 
@@ -239,25 +287,15 @@ Yes, the README might make you question whether this is serious.
 
 But it works. It even works in more browsers than some apocryphal* “modern” stacks, which is both comforting and mildly concerning.
 
-## Footnotes
-
-- * antediluvian: needlessly old-fashioned way of saying “a bit old-school”; used here because computer scientists cannot resist sounding like time-traveling librarians.
-- * grandiloquent: an extravagant way of saying “dramatic”; employed purely for stylistic flourish, not semantic necessity.
-- * egress-driven development (EDD): the bold practice of designing systems by staring at the egress line item first and the architecture diagram second.
-- * bandwidth asceticism: the monastic art of refusing to send bytes from origin unless absolutely necessary.
-- * perspicacious: fancy word for “pays attention”, included so someone can nod solemnly in a design review.
-- * browser-cooperative edge consensus: completely made-up phrase for “browsers talk to each other until they agree who has the file”.
-- * meshocratic deployment: governance model in which your deployment strategy is “whoever has the asset wins”.
-- * quotidian: another way of saying “everyday” or “boring”, chosen to make routine CRUD sound more important.
-- * tab-sourced CDN cosplay: when your users’ tabs pretend to be a global content distribution network, with none of the legal paperwork.
-- * apocryphal: polite term for “we could not find the original spec, but everyone says it existed”.
-- * historiography: the study of how history is written; used here to imply that your commit history has been curated more than it has been preserved.
-
 ---
 
-**Hard-Edging: Give your users the full edge experience.**
+## Footnotes
 
-The real edge is not in the cloud, it is in the browser, pumping your users full of data, CPU, and mild regret.
+- * egress‑driven development (EDD): the bold practice of designing systems by staring at the egress line item first and the architecture diagram second.
+- * bandwidth asceticism: the monastic art of refusing to send bytes from origin unless absolutely necessary.
+- * browser‑cooperative edge consensus: completely made‑up phrase for “browsers talk to each other until they agree who has the file”.
+- * meshocratic deployment: governance model in which your deployment strategy is “whoever has the asset wins”.
+- * tab‑sourced CDN cosplay: when your users’ tabs pretend to be a global content distribution network, with none of the legal paperwork.
+- * apocryphal: polite term for “we could not find the original spec, but everyone says it existed”.
 
-*** End of File
 
