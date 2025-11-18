@@ -15,7 +15,7 @@ export interface SignallingClientOptions {
 export class SignallingClient {
   private readonly opts: SignallingClientOptions;
   private ws: WebSocket | null = null;
-  private peerId: string | null = null;
+  public peerId: string | null = null;
 
   constructor(opts: SignallingClientOptions) {
     this.opts = opts;

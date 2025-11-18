@@ -2,9 +2,16 @@
   "name": "@hard-edging/webrtc",
   "version": "0.0.1",
   "description": "Hard-Edging WebRTC mesh management, signalling client, and transport utilities.",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run"

@@ -4,27 +4,29 @@ Give your users the full edging experience.
 
 ## What is Hard-Edging?
 
-Hard-Edging is a revolutionary peer-first web framework that puts the true edge of computation where it belongs: on your users' machines. Why spend money sending every byte through the cloud when you can offload literally everything to clients?
+Hard-Edging is a peer‑first web framework that treats browsers as first‑class infrastructure, not passive document viewers. Code, state, assets, and occasionally dignity are pushed to the very edge of the network: your users’ machines.
 
-Yes, your users' internet may feel the burn, but at least your backend egress is near zero. That's the part that matters.
+Instead of worshipping at the altar of “infinite cloud scale”, Hard‑Edging quietly asks: *what if the scale was already sitting in front of you, running a tab‑hoarding Chromium fork at 3am?*
 
-> "Why rely on cloud servers when the real edge is already in the browser?" — Probably us.
+Backend egress is something to be negotiated with, not celebrated. Less “global platform”, more “neighbourhood watch for bytes”.
+
+> “The edge is wherever your users are willing to share their bandwidth.” — someone who has seen a bill
 
 ## Core Philosophy
 
 ### All traffic is P2P (including assets)
 
-Messages, files, documents, even multiplayer game state flow directly between clients. On top of that, Hard-Edging treats your visitors like a living CDN: HTML shells, JS bundles, CSS, images, fonts, and media are all eligible to be fetched from peers first.
+Messages, files, documents, even multiplayer game state flow directly between clients. Hard‑Edging treats your visitors like a living mesh for **HTML shells, JS bundles, CSS, images, fonts, and media**: all are eligible to be fetched from peers first.
 
-The server exists only as a broker for private info, a signalling hub for WebRTC, and a reluctant fallback for assets that nobody else has.
+The server exists as a broker for private info, a signalling hub for WebRTC, and a reluctant fallback for assets that nobody else has. It’s the quiet adult in the room, not the star of the show.
 
-### Backend egress must be minimized
+### Backend egress must be *earned*
 
-No CDNs. No caching tricks. True Hard-Edging is about maximizing client-to-client bandwidth, even if it costs your users a little. Any byte served from origin is considered a minor failure of edge saturation.
+Hard‑Edging is about maximizing client‑to‑client bandwidth, even if it costs your users a few extra fan cycles. Any byte served from origin is treated as a small failure of edge saturation, a reminder that the mesh still has room to grow.
 
 ### User sacrifice is expected
 
-Their CPU, bandwidth, and patience will carry your apps. Think of it as community-powered edge computing.
+Their CPU, bandwidth, and patience will carry your apps. Think of it as community‑powered edge computing with a vaguely spiritual belief that **latency is temporary, but egress bills are eternal**.
 
 ### Optional private storage
 
@@ -41,19 +43,19 @@ If you really must store private data, the server will reluctantly handle it. Ot
 
 ## Motivation
 
-The web is full of frameworks that "scale" by shoving everything into the cloud. Hard-Edging asks:
+The web is full of frameworks that “scale” by pushing more logic into more regions behind more dashboards. Hard‑Edging asks a weirder question:
 
-- Why should our company pay for server bandwidth when the clients' machines could do it for free?
-- Why should real-time updates bounce through global data centers when the actual edge is already on the client?
-- Can we make a framework that forces your users to do all the work while your backend twiddles its thumbs?
+- What if the real cluster was the browsers you already have?
+- What if “edge runtime” just meant *other people’s laptops*?
+- What if the path of least resistance for a byte was **across the room**, not across an ocean?
 
-The answer is yes. Hard-Edging exists to:
+Hard‑Edging exists to:
 
-- Reduce backend egress to the absolute minimum
-- Push computation to the "real edge": the client
-- Force developers to confront the uncomfortable truth: users' machines are more than capable
+- Reduce backend egress to the absolute minimum that reality, compliance, and common sense demand
+- Push computation to the “real edge”: the client, the tab, the forgotten browser window
+- Force developers to confront the uncomfortable truth: users’ machines are more than capable, and occasionally more over‑provisioned than your staging cluster
 
-It's absurd, sure — but it works. Your users' bandwidth will cry, and your server bill will cheer.
+It’s a little absurd, but so is shipping 300 KB of JavaScript to re‑render static text. At least this absurdity buys you something: fewer bytes leaving your infrastructure, and more interesting conversations in your post‑mortems.
 
 ## Getting Started
 

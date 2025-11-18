@@ -9,7 +9,8 @@
     "build:packages": "npm run build --workspaces",
     "test": "npm run test:packages",
     "test:packages": "npm run test --workspaces",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --max-warnings=0"
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --max-warnings=0",
+    "dev:template": "cd packages/cli/templates/minimal && npm install && npm run dev"
   },
   "workspaces": [
     "packages/*",

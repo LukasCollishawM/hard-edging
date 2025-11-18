@@ -2,9 +2,16 @@
   "name": "@hard-edging/react",
   "version": "0.0.1",
   "description": "React bindings for Hard-Edging: providers, hooks, and devtools.",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "main": "dist/react/src/index.js",
+  "module": "dist/react/src/index.js",
+  "types": "dist/react/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/react/src/index.js",
+      "types": "./dist/react/src/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run"

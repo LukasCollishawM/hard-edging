@@ -26,7 +26,7 @@ export const createBroker = () => {
 
   const rooms = new Map<string, Set<string>>();
   const peers = new Map<string, PeerInfo>();
-  const sockets = new Map<string, WebSocket>();
+  const sockets = new Map<string, import('ws').WebSocket>();
 
   fastify.get('/health', async () => ({ status: 'ok' }));
 
@@ -104,7 +104,10 @@ export const createBroker = () => {
   return fastify;
 };
 
-if (require.main === module) {
+// ES module equivalent of require.main === module
+const currentFile = fileURLToPath(import.meta.url);
+const mainFile = path.resolve(process.argv[1]);
+if (currentFile === mainFile) {
   const app = createBroker();
   const port = Number(process.env.BROKER_PORT ?? 4000);
 

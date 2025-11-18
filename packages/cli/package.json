@@ -1,11 +1,12 @@
 {
   "name": "@hard-edging/cli",
   "version": "0.0.1",
+  "type": "module",
   "description": "Hard-Edging CLI for creating and running peer-first apps.",
   "bin": {
-    "hard-edging": "dist/index.cjs"
+    "hard-edging": "dist/index.js"
   },
-  "main": "dist/index.cjs",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json",

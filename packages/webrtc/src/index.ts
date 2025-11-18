@@ -1,40 +1,18 @@
-export interface AssetRequest {
-  id: string;
-  descriptor: {
-    id: string;
-    url: string;
-    size: number;
-    contentType: string;
-    hash?: string;
-  };
-}
-
-export interface SeedAssetPayload extends AssetRequest {
-  dataBase64: string;
-  contentType: string;
-}
-
-export interface AssetResponse {
-  id: string;
-  found: boolean;
-  // Base64-encoded data for simplicity; real implementations can stream.
-  dataBase64?: string;
-  contentType?: string;
-  peerId?: string;
-}
-
-export interface MeshOptions {
-  brokerUrl: string;
-  roomId: string;
-}
+import type { MeshMetricsSnapshot } from './metrics';
+import type { AssetRequest, AssetResponse, MeshOptions, SeedAssetPayload } from './meshTypes';
+import { PeerConnectionManager } from './peerConnectionManager';
 
 export interface Mesh {
   requestAssetFromPeers(request: AssetRequest, timeoutMs: number): Promise<AssetResponse | null>;
   seedAsset(payload: SeedAssetPayload): Promise<void>;
+  getPeerIds?(): string[];
+  getStats?(): MeshMetricsSnapshot;
+  recordOriginBytes?(bytes: number): void;
 }
 
 class InMemoryMesh implements Mesh {
   private readonly assets = new Map<string, SeedAssetPayload>();
+  private readonly peers = new Set<string>(['self']);
 
   async requestAssetFromPeers(request: AssetRequest): Promise<AssetResponse | null> {
     const found = this.assets.get(request.id);
@@ -52,6 +30,23 @@ class InMemoryMesh implements Mesh {
   async seedAsset(payload: SeedAssetPayload): Promise<void> {
     this.assets.set(payload.id, payload);
   }
+
+  getPeerIds(): string[] {
+    return Array.from(this.peers);
+  }
+
+  getStats() {
+    return {
+      peerCount: this.peers.size,
+      bytesSentP2P: 0,
+      bytesReceivedP2P: 0,
+      bytesFromOrigin: 0
+    };
+  }
+
+  recordOriginBytes(_bytes: number): void {
+    // no-op in in-memory implementation
+  }
 }
 
 export const createMesh = (options: MeshOptions): Mesh => {
@@ -59,8 +54,6 @@ export const createMesh = (options: MeshOptions): Mesh => {
     return new InMemoryMesh();
   }
 
-  // Lazy import to avoid circular references in Node/test environments.
-  const { PeerConnectionManager } = require('./peerConnectionManager') as typeof import('./peerConnectionManager');
   return new PeerConnectionManager(options);
 };
 

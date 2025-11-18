@@ -1,0 +1,14 @@
+{
+  "id": "demo-large-asset",
+  "description": "This is a deliberately oversized demo asset used to prove that Hard-Edging is actually moving bytes peer-to-peer instead of bullying your origin.",
+  "sizeHint": "roughly a few hundred kilobytes once stringified",
+  "payload": [
+    "Hard-Edging: the CDN is other people.",
+    "If you're reading this from a peer, your origin just got spared a tiny bit of pain.",
+    "Bandwidth is a social construct; we just redistribute it.",
+    "This blob exists purely to make Edge Saturation look less embarrassing in screenshots."
+  ],
+  "padding": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}
+
+

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { HardEdgingProvider, MeshInspector, useMesh } from '@hard-edging/react';
 
@@ -20,6 +20,14 @@ const EdgeStatus: React.FC = () => {
 };
 
 const App: React.FC = () => {
+  useEffect(() => {
+    // Deterministic demo asset to exercise the P2P pipeline.
+    // First browser will fetch from origin and seed it; subsequent browsers should go P2P.
+    void fetch('/demo-large.json').catch(() => {
+      // ignore in UI; MeshInspector will still show bytes
+    });
+  }, []);
+
   return (
     <HardEdgingProvider>
       <h1>Hard-Edging Minimal App</h1>

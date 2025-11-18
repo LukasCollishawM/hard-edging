@@ -1,9 +1,10 @@
 {
   "name": "@hard-edging/broker",
   "version": "0.0.1",
+  "type": "module",
   "description": "Hard-Edging Node.js broker server for signalling, auth, and room membership.",
-  "main": "dist/server.cjs",
-  "module": "dist/server.mjs",
+  "main": "dist/server.js",
+  "module": "dist/server.js",
   "types": "dist/server.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json",

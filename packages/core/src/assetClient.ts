@@ -5,6 +5,7 @@ import type {
   AssetId,
   AssetLocation,
   HardEdgingConfig,
+  MeshStats,
   P2PAssetFetchResult
 } from './types';
 
@@ -62,6 +63,10 @@ export class AssetClient {
     const bytes = new Uint8Array(buffer);
     const base64 = btoa(String.fromCharCode(...bytes));
 
+    if (typeof this.mesh.recordOriginBytes === 'function') {
+      this.mesh.recordOriginBytes(bytes.byteLength);
+    }
+
     void this.mesh.seedAsset({
       id: assetId,
       descriptor,
@@ -71,6 +76,20 @@ export class AssetClient {
 
     const from: AssetLocation = { originFallback: true };
     return { response: originResponse, from };
+  }
+
+  getMeshStats(): MeshStats | null {
+    if (typeof this.mesh.getStats === 'function') {
+      return this.mesh.getStats();
+    }
+    return null;
+  }
+
+  getMeshPeerIds(): string[] {
+    if (typeof this.mesh.getPeerIds === 'function') {
+      return this.mesh.getPeerIds();
+    }
+    return [];
   }
 }
 

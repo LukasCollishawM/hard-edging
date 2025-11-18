@@ -1,32 +1,39 @@
-import { useMemo } from 'react';
-
-export interface MeshStats {
-  peerCount: number;
-  bytesSentP2P: number;
-  bytesReceivedP2P: number;
-  bytesFromOrigin: number;
-}
+import { useEffect, useState } from 'react';
+import type { MeshStats } from '@hard-edging/core';
+import { useHardEdging } from '../context';
 
 export interface UseMeshResult {
   peers: string[];
   stats: MeshStats;
 }
 
-export const useMesh = (): UseMeshResult => {
-  // Real mesh stats will be wired from the WebRTC layer; for now provide a
-  // stable shape so devtools and UIs can be implemented.
-  return useMemo(
-    () => ({
-      peers: [],
-      stats: {
-        peerCount: 1,
-        bytesSentP2P: 0,
-        bytesReceivedP2P: 0,
-        bytesFromOrigin: 0
-      }
-    }),
-    []
-  );
+const defaultStats: MeshStats = {
+  peerCount: 1,
+  bytesSentP2P: 0,
+  bytesReceivedP2P: 0,
+  bytesFromOrigin: 0
 };
 
+export const useMesh = (): UseMeshResult => {
+  const { assetClient } = useHardEdging();
+  const [state, setState] = useState<UseMeshResult>({
+    peers: [],
+    stats: defaultStats
+  });
+
+  useEffect(() => {
+    const update = () => {
+      const stats = assetClient.getMeshStats() ?? defaultStats;
+      const peers = assetClient.getMeshPeerIds();
+      setState({ peers, stats });
+    };
+
+    update();
+    // Update more frequently for better real-time feel
+    const id = window.setInterval(update, 500);
+    return () => window.clearInterval(id);
+  }, [assetClient]);
+
+  return state;
+};
 

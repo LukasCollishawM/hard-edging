@@ -17,13 +17,27 @@ const ASSET_EXTENSIONS = [
   '.ttf',
   '.otf',
   '.mp4',
-  '.webm'
+  '.webm',
+  '.json'
 ];
 
 const isAssetRequest = (url: string): boolean => {
   try {
     const u = new URL(url, globalThis.location?.href);
-    return ASSET_EXTENSIONS.some((ext) => u.pathname.endsWith(ext));
+    const pathname = u.pathname;
+    
+    // Exclude Vite dev server internal requests
+    if (pathname.startsWith('/@vite/') || 
+        pathname.startsWith('/@fs/') ||
+        pathname.startsWith('/@id/') ||
+        pathname.startsWith('/node_modules/') ||
+        pathname.includes('?import') ||
+        pathname.includes('?t=')) {
+      return false;
+    }
+    
+    // Only intercept actual asset files
+    return ASSET_EXTENSIONS.some((ext) => pathname.endsWith(ext));
   } catch {
     return false;
   }
