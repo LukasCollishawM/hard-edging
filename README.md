@@ -293,7 +293,7 @@ But it works. It even works in more browsers than some apocryphal* “modern” 
 
 - *egress‑driven development (EDD)*: the bold practice of designing systems by staring at the egress line item first and the architecture diagram second.
 - *bandwidth asceticism*: the monastic art of refusing to send bytes from origin unless absolutely necessary.
-- *browser‑cooperative edge consensus*: completely made‑up phrase for “browsers talk to each other until they agree who has the file”.
+- *browser‑cooperative edge quorum*: completely made‑up phrase for “browsers talk to each other until enough of them agree who has the file”.
 - *meshocratic deployment*: governance model in which your deployment strategy is “whoever has the asset wins”.
 - *tab‑sourced CDN cosplay*: when your users’ tabs pretend to be a global content distribution network, with none of the legal paperwork.
 - *apocryphal*: polite term for “I could not find the original spec, but everyone says it existed”.
