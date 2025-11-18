@@ -1,4 +1,4 @@
-import type { MeshMetricsSnapshot } from './metrics';
+import type { MeshMetricsSnapshot, PeerCredit } from './metrics';
 import type { AssetRequest, AssetResponse, MeshOptions, SeedAssetPayload } from './meshTypes';
 import { PeerConnectionManager } from './peerConnectionManager';
 
@@ -8,6 +8,7 @@ export interface Mesh {
   getPeerIds?(): string[];
   getStats?(): MeshMetricsSnapshot;
   recordOriginBytes?(bytes: number): void;
+  getPeerCredits?(): PeerCredit[];
 }
 
 class InMemoryMesh implements Mesh {
@@ -40,7 +41,8 @@ class InMemoryMesh implements Mesh {
       peerCount: this.peers.size,
       bytesSentP2P: 0,
       bytesReceivedP2P: 0,
-      bytesFromOrigin: 0
+      bytesFromOrigin: 0,
+      peerCredits: []
     };
   }
 

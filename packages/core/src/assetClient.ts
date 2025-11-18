@@ -91,6 +91,13 @@ export class AssetClient {
     }
     return [];
   }
+  
+  getPeerCredits() {
+    if (typeof this.mesh.getPeerCredits === 'function') {
+      return this.mesh.getPeerCredits();
+    }
+    return [];
+  }
 }
 
 

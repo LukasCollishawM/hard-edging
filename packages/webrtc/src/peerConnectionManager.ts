@@ -277,14 +277,21 @@ export class PeerConnectionManager implements Mesh {
           };
           if (msg.found && msg.dataBase64) {
             const bytes = Math.floor((msg.dataBase64.length * 3) / 4);
-            this.metrics.addReceivedP2P(bytes);
+            this.metrics.addReceivedP2P(bytes, peerId);
             console.log(`[Hard-Edging] Received asset ${msg.id} from peer ${peerId} (${bytes} bytes)`);
+            
+            // Automatically thank the peer who "edged" us
+            this.thankPeer(peerId, msg.id, bytes);
           }
           for (const resolve of resolvers) {
             resolve(response);
           }
         } else if (msg.type === 'ASSET_REQUEST') {
           this.handleAssetRequest(peerId, msg.id, dc);
+        } else if (msg.type === 'PEER_THANK_YOU') {
+          // A peer is thanking us for serving them
+          console.log(`[Hard-Edging] Received thank you from peer ${peerId} for asset ${msg.assetId}`);
+          // Could track this for karma/credits if desired
         }
       } catch {
         // ignore malformed
@@ -366,6 +373,40 @@ export class PeerConnectionManager implements Mesh {
 
   recordOriginBytes(bytes: number): void {
     this.metrics.addFromOrigin(bytes);
+  }
+  
+  /**
+   * Sends a "thank you" message to a peer who served us an asset.
+   * This is the polite acknowledgment for peers who "edged" us.
+   */
+  private thankPeer(peerId: string, assetId: string, bytes: number): void {
+    const peer = this.peers.get(peerId);
+    if (!peer?.dc || peer.dc.readyState !== 'open') {
+      return;
+    }
+    
+    // Mark as thanked in metrics
+    this.metrics.markPeerThanked(peerId);
+    
+    // Send thank you message
+    try {
+      peer.dc.send(JSON.stringify({
+        type: 'PEER_THANK_YOU',
+        assetId,
+        bytes,
+        timestamp: Date.now()
+      }));
+      console.log(`[Hard-Edging] Thanked peer ${peerId} for serving asset ${assetId} (${bytes} bytes)`);
+    } catch (error) {
+      // Silently fail if channel is closed
+    }
+  }
+  
+  /**
+   * Gets peer credits (peers who have served us assets)
+   */
+  getPeerCredits() {
+    return this.metrics.getPeerCredits();
   }
 }
 

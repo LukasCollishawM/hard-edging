@@ -19,11 +19,19 @@ export interface AssetLocation {
   originFallback: boolean;
 }
 
+export interface PeerCredit {
+  peerId: string;
+  bytesReceived: number;
+  assetsReceived: number;
+  lastThankedAt?: number;
+}
+
 export interface MeshStats {
   peerCount: number;
   bytesSentP2P: number;
   bytesReceivedP2P: number;
   bytesFromOrigin: number;
+  peerCredits: PeerCredit[];
 }
 
 export interface HardEdgingConfig {

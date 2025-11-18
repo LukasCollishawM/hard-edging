@@ -11,7 +11,8 @@ const defaultStats: MeshStats = {
   peerCount: 1,
   bytesSentP2P: 0,
   bytesReceivedP2P: 0,
-  bytesFromOrigin: 0
+  bytesFromOrigin: 0,
+  peerCredits: []
 };
 
 export const useMesh = (): UseMeshResult => {

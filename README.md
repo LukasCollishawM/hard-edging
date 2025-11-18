@@ -1,6 +1,6 @@
 # Hard-Edging
 
-Give your users the full edging experience.
+Give your users the full edging experience, with a faintly antediluvian* respect for the browser.
 
 ## What is Hard-Edging?
 
@@ -10,7 +10,7 @@ Instead of worshipping at the altar of “infinite cloud scale”, Hard‑Edging
 
 Backend egress is something to be negotiated with, not celebrated. Less “global platform”, more “neighbourhood watch for bytes”.
 
-> “The edge is wherever your users are willing to share their bandwidth.” — someone who has seen a bill
+> “The edge is wherever your users are willing to share their bandwidth.” - someone who has seen a bill
 
 ## Core Philosophy
 
@@ -34,7 +34,7 @@ If you really must store private data, the server will reluctantly handle it. Ot
 
 ### Gratitude is automatic
 
-When a peer serves you an asset—when they "edge" you—Hard-Edging automatically sends a thank-you message. The Mesh Inspector tracks peer credits: who served you what, how many bytes, and when. It's a small gesture, but in a world where bandwidth is currency, acknowledging your benefactors feels like the right thing to do. Every peer who shares gets a timestamp, a byte count, and the satisfaction of knowing their contribution was noticed.
+When a peer serves you an asset - when they "edge" you - Hard-Edging automatically sends a thank-you message. The Mesh Inspector tracks peer credits: who served you what, how many bytes, and when. It is a small gesture, but in a world where bandwidth is currency, acknowledging your benefactors feels like the right thing to do. Every peer who shares gets a timestamp, a byte count, and the satisfaction of knowing their contribution was noticed.
 
 ## Features
 
@@ -60,14 +60,19 @@ And then it keeps going:
 - How did we end up paying rent on our own bytes, every month, forever?
 - At what point did “edge” stop meaning *near the user* and start meaning “near a shareholder presentation”?
 
+In more grandiloquent* terms, Hard‑Edging is an experiment in egress-driven development (EDD)* and bandwidth asceticism*. It assumes at least one person in your organisation is sufficiently perspicacious* to notice where the money is actually leaking.
+
 Hard‑Edging exists to:
 
 - Reduce backend egress to the absolute minimum that reality, compliance, and common sense demand
 - Push computation to the “real edge”: the client, the tab, the forgotten browser window
 - Treat your users’ browsers as a cooperatively over‑provisioned cluster, not as consumers of a “content delivery experience”
 - Give you a framework that is simultaneously **useful**, **ridiculous**, and **uncomfortably honest** about where the bandwidth is really coming from
+- Provide just enough browser‑cooperative edge consensus* that you can say “distributed system” in meetings without blushing
 
-It’s a little absurd, but so is shipping 300 KB of JavaScript to re‑render static text. At least this absurdity buys you something: fewer bytes leaving your infrastructure, more visible peer‑to‑peer flows, and more interesting conversations in your post‑mortems and procurement meetings.
+For the historically inclined, the precise sequence of commits that led here has been tastefully blurred into meshocratic deployment* and squashed historiography*. This is for your protection and ours.
+
+It is a little absurd, but so is shipping 300 KB of JavaScript to re‑render static text. At least this absurdity buys you something: fewer bytes leaving your infrastructure, more visible peer‑to‑peer flows, and more interesting conversations in your post‑mortems and procurement meetings.
 
 ## Getting Started
 
@@ -127,11 +132,29 @@ createRoot(document.getElementById('root')!).render(<App />);
 - Collaborative editors
 - Multiplayer turn-based games
 - Real-time chat apps
-- Anything else you want to offload to your users' devices
+- Anything else you want to offload to your users' devices, from dashboards to deeply quotidian* CRUD
+
+## Frequently asked (answers left as an exercise to the reader)
+
+- **Is this serious?**
+- **Will this reduce my cloud bill?**
+- **Will this increase my users' bill?**
+- **Is this basically running a tiny CDN cult in my users' browsers?**
+- **Will legal be mad?**
+- **Will security be mad?**
+- **Do I need to tell anyone I am doing this?**
+- **What happens if a peer disappears mid-transfer?**
+- **Can I use this for production?**
+- **Should I use this for production?**
+- **Is this compatible with corporate “zero trust” networking policies?**
+- **What does my compliance team need to sign off on?**
+- **Is this tab-sourced CDN cosplay*?**
+
+The answers are left as an exercise to the reader.
 
 ## Packages
 
-Hard-Edging is organized as a monorepo of focused packages, each responsible for a specific layer of the mesh.
+Hard-Edging is organized as a monorepo of focused packages, each responsible for a specific layer of the mesh. Think of it as meshocratic deployment* for people who still like `package.json`.
 
 ### @hard-edging/core
 
@@ -194,7 +217,7 @@ It's deliberately small in scope. The philosophy is simple: **coordinate, don't 
 
 ### @hard-edging/privacy
 
-Privacy annotations, schemas, and leak detection for Hard-Edging. It exists to make sure that when you say "share this", you really mean it — and when you don't, the mesh respects that boundary.
+Privacy annotations, schemas, and leak detection for Hard-Edging. It exists to make sure that when you say "share this", you really mean it - and when you do not, the mesh respects that boundary.
 
 This package gives you tools to describe **what data is allowed to escape the current browser**, and in which direction:
 
@@ -204,38 +227,35 @@ This package gives you tools to describe **what data is allowed to escape the cu
 
 Where the rest of Hard‑Edging is about moving bytes freely, `@hard-edging/privacy` is about deciding which bytes deserve a quieter life.
 
-## Frequently asked (answers left as an exercise to the reader)
-
-- **Is this serious?**
-- **Will this reduce my cloud bill?**
-- **Will this increase my users' bill?**
-- **Is this basically running a tiny CDN cult in my users' browsers?**
-- **Will legal be mad?**
-- **Will security be mad?**
-- **Do I need to tell anyone I'm doing this?**
-- **What happens if a peer disappears mid-transfer?**
-- **Can I use this for production?**
-- **Should I use this for production?**
-- **Is this compatible with corporate “zero trust” networking policies?**
-- **What does my compliance team need to sign off on?**
-
-The answers are left as an exercise to the reader.
-
 ## Disclaimer
 
-Yes, we know this probably isn't the most cost-effective framework in reality.
+Yes, we know this probably is not the most cost-effective framework in reality.
 
 Yes, your users' bandwidth and CPU may silently resent you.
 
 Yes, the README might make you question whether this is serious.
 
-But it works. And that's the fun part.
+But it works. It even works in more browsers than some apocryphal* “modern” stacks, which is both comforting and mildly concerning.
+
+## Footnotes
+
+- * antediluvian: needlessly old-fashioned way of saying “a bit old-school”; used here because computer scientists cannot resist sounding like time-traveling librarians.
+- * grandiloquent: an extravagant way of saying “dramatic”; employed purely for stylistic flourish, not semantic necessity.
+- * egress-driven development (EDD): the bold practice of designing systems by staring at the egress line item first and the architecture diagram second.
+- * bandwidth asceticism: the monastic art of refusing to send bytes from origin unless absolutely necessary.
+- * perspicacious: fancy word for “pays attention”, included so someone can nod solemnly in a design review.
+- * browser-cooperative edge consensus: completely made-up phrase for “browsers talk to each other until they agree who has the file”.
+- * meshocratic deployment: governance model in which your deployment strategy is “whoever has the asset wins”.
+- * quotidian: another way of saying “everyday” or “boring”, chosen to make routine CRUD sound more important.
+- * tab-sourced CDN cosplay: when your users’ tabs pretend to be a global content distribution network, with none of the legal paperwork.
+- * apocryphal: polite term for “we could not find the original spec, but everyone says it existed”.
+- * historiography: the study of how history is written; used here to imply that your commit history has been curated more than it has been preserved.
 
 ---
 
 **Hard-Edging: Give your users the full edge experience.**
 
-The real edge isn't in the cloud — it's in the browser, pumping your users full of data, CPU, and mild regret.
+The real edge is not in the cloud, it is in the browser, pumping your users full of data, CPU, and mild regret.
 
 *** End of File
 

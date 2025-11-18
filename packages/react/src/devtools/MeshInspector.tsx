@@ -219,6 +219,74 @@ export const MeshInspector: React.FC = () => {
           </div>
         )}
 
+        {stats.peerCredits && stats.peerCredits.length > 0 && (
+          <div
+            style={{
+              padding: '1.5rem',
+              background: 'rgba(139, 69, 19, 0.1)',
+              borderRadius: '12px',
+              border: '1px solid rgba(139, 69, 19, 0.3)',
+              marginTop: '2rem'
+            }}
+          >
+            <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: '#d97706' }}>
+              🙏 Peers Who Edged You
+            </h2>
+            <p style={{ fontSize: '0.85rem', color: '#b0b0b0', marginBottom: '1rem' }}>
+              These peers have served you assets. They've been automatically thanked for their service.
+            </p>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem'
+              }}
+            >
+              {stats.peerCredits
+                .sort((a, b) => b.bytesReceived - a.bytesReceived)
+                .map((credit) => (
+                  <div
+                    key={credit.peerId}
+                    style={{
+                      padding: '1rem',
+                      background: 'rgba(139, 69, 19, 0.15)',
+                      borderRadius: '8px',
+                      border: '1px solid rgba(139, 69, 19, 0.3)',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(139, 69, 19, 0.25)';
+                      e.currentTarget.style.transform = 'translateX(4px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(139, 69, 19, 0.15)';
+                      e.currentTarget.style.transform = 'translateX(0)';
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                      <div style={{ fontWeight: 'bold', color: '#d97706', fontSize: '0.9rem' }}>
+                        {credit.peerId}
+                      </div>
+                      {credit.lastThankedAt && (
+                        <div style={{ fontSize: '0.75rem', color: '#b0b0b0' }}>
+                          Thanked {Math.floor((Date.now() - credit.lastThankedAt) / 1000)}s ago
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem', color: '#e0e0e0' }}>
+                      <div>
+                        <span style={{ opacity: 0.7 }}>Assets:</span> {credit.assetsReceived}
+                      </div>
+                      <div>
+                        <span style={{ opacity: 0.7 }}>Bytes:</span> {(credit.bytesReceived / 1024).toFixed(2)} KB
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
         <div
           style={{
             marginTop: '2rem',
