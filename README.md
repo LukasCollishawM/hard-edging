@@ -36,17 +36,17 @@ If you really must store private data, the server will reluctantly handle it. Ot
 
 When a peer serves you an asset (when they "edge" you), Hard-Edging does not automatically send thank-you messages. Instead, you get prompts and buttons to explicitly acknowledge peers who have shared with you. The Mesh Inspector tracks peer credits: who served you what, how many bytes, and when. You decide when to click "Send thanks".
 
-You can trigger these prompts however you want: after hovering over an asset for a while, when you notice you keep requesting the same file, or just when you feel like acknowledging someone's contribution. The point is: **THIS IS NOT AN AUTOMATED PROCESS, THIS IS ACTIVE ACKNOWLEDGEMENT**. When you send thanks, the peer receives a notification. If you keep thanking the same peer repeatedly, well, maybe the mesh is trying to tell you something about your connection.
+You can trigger these prompts however you want: after hovering over an asset for a while, when you notice you keep requesting the same file, or just when you feel like acknowledging someone's contribution. When you send thanks, the peer receives a notification. If you keep thanking the same peer repeatedly, well, maybe the mesh is trying to tell you something about your connection.
 
 ## Features
 
 - Automatic peer discovery and mesh formation
 - Real-time P2P messaging and data syncing
 - CRDT-based local-first storage for collaborative apps
-- Minimal backend: only signaling, auth, and optional private data
+- Minimal backend: mostly signaling, auth, and optional private data, plus the occasional reality check
 - Hot-reload dev server with P2P debugging tools
-- Developer-friendly API: server code optional, mesh-first default
-- **Peer acknowledgment system**: Peers who serve you assets are automatically thanked, with credits tracked and displayed in the Mesh Inspector
+- APIs that try to be understandable without a three-part explainer video
+- **Peer acknowledgment system**: Mesh Inspector shows who has served you assets and lets you send explicit, opt-in thanks (with visible credits) when you actually feel like it
 
 ## Motivation
 
