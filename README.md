@@ -4,7 +4,7 @@ Edge your users so you can pay your bills.*
 
 *_afford your cloud egress bills_
 
-> The edge is wherever two browsers decide to share a little more than strictly necessary.
+> The edge is wherever two browsers linger a little too long over each other's packets.
 
 Hard-Edging is a peer‑first web framework where **every front‑end asset tries to come from another user before it comes from you**:
 
