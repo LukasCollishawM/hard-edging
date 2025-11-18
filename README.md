@@ -32,6 +32,10 @@ Their CPU, bandwidth, and patience will carry your apps. Think of it as communit
 
 If you really must store private data, the server will reluctantly handle it. Otherwise, Hard-Edging keeps everything in the mesh, where it belongs.
 
+### Gratitude is automatic
+
+When a peer serves you an asset—when they "edge" you—Hard-Edging automatically sends a thank-you message. The Mesh Inspector tracks peer credits: who served you what, how many bytes, and when. It's a small gesture, but in a world where bandwidth is currency, acknowledging your benefactors feels like the right thing to do. Every peer who shares gets a timestamp, a byte count, and the satisfaction of knowing their contribution was noticed.
+
 ## Features
 
 - Automatic peer discovery and mesh formation
@@ -40,6 +44,7 @@ If you really must store private data, the server will reluctantly handle it. Ot
 - Minimal backend: only signaling, auth, and optional private data
 - Hot-reload dev server with P2P debugging tools
 - Developer-friendly API: server code optional, mesh-first default
+- **Peer acknowledgment system**: Peers who serve you assets are automatically thanked, with credits tracked and displayed in the Mesh Inspector
 
 ## Motivation
 
@@ -93,6 +98,81 @@ p2p.on("chat", msg => console.log("Peer says:", msg.text));
 - Multiplayer turn-based games
 - Real-time chat apps
 - Anything else you want to offload to your users' devices
+
+## Packages
+
+Hard-Edging is organized as a monorepo of focused packages, each responsible for a specific layer of the mesh.
+
+### @hard-edging/core
+
+Hard-Edging core runtime: shared types, CRDT-backed documents, and the basic wiring needed to let your users' browsers do the hard work while your servers stay suspiciously idle.
+
+Think of this package as the **grammar of the mesh**: IDs, configs, asset descriptors, and the logic that decides whether a byte should take the long way (origin) or the short way (some other tab that already suffered for it).
+
+Instead of assuming "there will be a CDN", `@hard-edging/core` assumes there will be **other people**: other peers, other event loops, other machines willing to cache and forward your assets because they happened to be there first.
+
+### @hard-edging/webrtc
+
+WebRTC mesh management and signalling helpers for Hard-Edging. This package is responsible for wiring browsers directly together so that "the network" stops being an abstract cloud and starts being the other tabs you forgot you had open.
+
+`@hard-edging/webrtc` handles:
+
+- Signalling via the broker
+- Peer connection lifecycle (`RTCPeerConnection` and data channels)
+- Asset request/response routing over reliable data channels
+- Simple metrics, so you can see who's doing the sharing and who's freeloading
+
+It doesn't try to be a video stack or a full SFU. It just wants to make sure that when one browser has already paid the cost for an asset, the others can politely ask for a copy.
+
+### @hard-edging/react
+
+React bindings for Hard-Edging: providers, hooks, and devtools that let you build peer-first UIs without thinking about WebRTC handshakes on every render.
+
+This package gives you:
+
+- `HardEdgingProvider` to bootstrap the mesh and service worker
+- Hooks like `useMesh`, `useAsset`, and `usePrivacyBoundary` to make P2P feel like ordinary React state
+- A Mesh Inspector overlay that turns your app into a small observatory for bandwidth karma
+
+State is designed to flow **horizontally** between peers first. The server plays the role of quiet librarian and emergency archivist, not omnipresent storyteller.
+
+### @hard-edging/cli
+
+The `hard-edging` CLI scaffolds and runs Hard-Edging applications. It wires together Vite, the broker, and your mesh so you can focus on writing components instead of hand‑stitching dev servers and signalling layers every weekend.
+
+Use it to:
+
+- `init` new projects with a mesh‑ready template
+- `dev` to start the broker + Vite in one go
+- `build` to produce production bundles
+- `mesh-inspect` (future) to introspect what your peers are actually doing
+
+In a sense, the CLI is the ritual that turns a normal app into a peer‑to‑peer organism. One command, and suddenly your local tabs are negotiating amongst themselves.
+
+### @hard-edging/broker
+
+The Hard-Edging broker is a minimal Node.js runtime responsible for signalling, authentication, and room membership. It's the polite introducer at a party: it gets peers talking to each other and then steps back out of the conversation.
+
+Responsibilities:
+
+- Accept WebSocket connections from browsers
+- Manage rooms and peer lists
+- Relay WebRTC offers/answers/candidates between peers
+- Optionally serve static assets as a last‑resort authoritative source
+
+It's deliberately small in scope. The philosophy is simple: **coordinate, don't dominate**. Let the browsers carry the actual content once they've met.
+
+### @hard-edging/privacy
+
+Privacy annotations, schemas, and leak detection for Hard-Edging. It exists to make sure that when you say "share this", you really mean it — and when you don't, the mesh respects that boundary.
+
+This package gives you tools to describe **what data is allowed to escape the current browser**, and in which direction:
+
+- Mark data as `shareable`, `private`, or `room-local`
+- Enforce those policies at runtime before anything leaves the tab
+- Log suspicious flows so you can debug "why did this ever leave my machine?"
+
+Where the rest of Hard‑Edging is about moving bytes freely, `@hard-edging/privacy` is about deciding which bytes deserve a quieter life.
 
 ## Disclaimer
 
