@@ -2,7 +2,7 @@
 
 Edge your users so you can pay your bills.*
 
-__afford your cloud egress bills__
+*_afford your cloud egress bills_
 
 > The edge is wherever two browsers decide to share.
 
