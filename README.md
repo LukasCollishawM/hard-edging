@@ -32,11 +32,11 @@ Their CPU, bandwidth, and patience will carry your apps. Think of it as communit
 
 If you really must store private data, the server will reluctantly handle it. Otherwise, Hard-Edging keeps everything in the mesh, where it belongs.
 
-### Gratitude is conspicuous and opt-in
+### Gratitude is opt-in, not automatic
 
-When a peer serves you an asset - when they "edge" you - Hard-Edging does not silently fire off automated thank-you packets. Instead, it gives you the tools to surface prompts and buttons so that any gratitude is an explicit, conscious act of acknowledgment, not background noise. The Mesh Inspector tracks peer credits: who served you what, how many bytes, and when, and you decide when to click "Send thanks".
+When a peer serves you an asset (when they "edge" you), Hard-Edging does not automatically send thank-you messages. Instead, you get prompts and buttons to explicitly acknowledge peers who have shared with you. The Mesh Inspector tracks peer credits: who served you what, how many bytes, and when. You decide when to click "Send thanks".
 
-You can wire this into whatever attention heuristic you like: hovering over a particular asset for a suspiciously long time, opening the same mesh-heavy page five times in a row, or just feeling the ineffable stirrings of edge-based chemistry. Either way, the protocol is clear: **THIS IS NOT AN AUTOMATED PROCESS, THIS IS ACTIVE ACKNOWLEDGEMENT**.
+You can trigger these prompts however you want: after hovering over an asset for a while, when you notice you keep requesting the same file, or just when you feel like acknowledging someone's contribution. The point is: **THIS IS NOT AN AUTOMATED PROCESS, THIS IS ACTIVE ACKNOWLEDGEMENT**. When you send thanks, the peer receives a notification. If you keep thanking the same peer repeatedly, well, maybe the mesh is trying to tell you something about your connection.
 
 ## Features
 
