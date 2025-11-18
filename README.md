@@ -18,7 +18,7 @@ Your server is still there, somewhere, behaving itself as:
 
 - a signalling point for WebRTC
 - a reluctant source of “truth” when the mesh fails
-- a place to put secrets that would otherwise wander off into the gossip
+- a place to put secrets
 
 But the real work happens in the browsers, staring at each other across the network like slightly overcommitted houseplants, trading assets and state.
 
