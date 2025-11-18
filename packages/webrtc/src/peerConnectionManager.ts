@@ -278,10 +278,10 @@ export class PeerConnectionManager implements Mesh {
           if (msg.found && msg.dataBase64) {
             const bytes = Math.floor((msg.dataBase64.length * 3) / 4);
             this.metrics.addReceivedP2P(bytes, peerId);
-            console.log(`[Hard-Edging] Received asset ${msg.id} from peer ${peerId} (${bytes} bytes)`);
-            
-            // Automatically thank the peer who "edged" us
-            this.thankPeer(peerId, msg.id, bytes);
+            console.log(
+              `[Hard-Edging] Received asset ${msg.id} from peer ${peerId} (${bytes} bytes)`
+            );
+            // Note: no automatic thanks here. Any gratitude must be explicitly initiated by the user.
           }
           for (const resolve of resolvers) {
             resolve(response);
@@ -290,8 +290,16 @@ export class PeerConnectionManager implements Mesh {
           this.handleAssetRequest(peerId, msg.id, dc);
         } else if (msg.type === 'PEER_THANK_YOU') {
           // A peer is thanking us for serving them
-          console.log(`[Hard-Edging] Received thank you from peer ${peerId} for asset ${msg.assetId}`);
-          // Could track this for karma/credits if desired
+          console.log(
+            `[Hard-Edging] Received thank you from peer ${peerId} for asset ${msg.assetId}`
+          );
+          // Surface an optional popup so the recipient actually sees the appreciation.
+          if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+            const message =
+              (msg as any).message ??
+              `Peer ${peerId} thanked you for serving asset ${msg.assetId}. The mesh approves this connection.`;
+            window.alert(`[Hard-Edging] ${message}`);
+          }
         }
       } catch {
         // ignore malformed
@@ -378,6 +386,7 @@ export class PeerConnectionManager implements Mesh {
   /**
    * Sends a "thank you" message to a peer who served us an asset.
    * This is the polite acknowledgment for peers who "edged" us.
+   * Intentionally only called from explicit user actions.
    */
   private thankPeer(peerId: string, assetId: string, bytes: number): void {
     const peer = this.peers.get(peerId);
@@ -401,7 +410,14 @@ export class PeerConnectionManager implements Mesh {
       // Silently fail if channel is closed
     }
   }
-  
+
+  /**
+   * Public entry point used by higher layers (e.g. React) to trigger an explicit thank-you.
+   */
+  sendThankYou(peerId: string, assetId: string, bytes?: number): void {
+    this.thankPeer(peerId, assetId, bytes ?? 0);
+  }
+
   /**
    * Gets peer credits (peers who have served us assets)
    */

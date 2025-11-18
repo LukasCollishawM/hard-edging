@@ -91,12 +91,18 @@ export class AssetClient {
     }
     return [];
   }
-  
+
   getPeerCredits() {
     if (typeof this.mesh.getPeerCredits === 'function') {
       return this.mesh.getPeerCredits();
     }
     return [];
+  }
+
+  sendThankYou(peerId: string, assetId: string, bytes?: number): void {
+    if (typeof this.mesh.sendThankYou === 'function') {
+      this.mesh.sendThankYou(peerId, assetId, bytes);
+    }
   }
 }
 

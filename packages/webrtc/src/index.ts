@@ -9,6 +9,7 @@ export interface Mesh {
   getStats?(): MeshMetricsSnapshot;
   recordOriginBytes?(bytes: number): void;
   getPeerCredits?(): PeerCredit[];
+  sendThankYou?(peerId: string, assetId: string, bytes?: number): void;
 }
 
 class InMemoryMesh implements Mesh {
@@ -47,6 +48,10 @@ class InMemoryMesh implements Mesh {
   }
 
   recordOriginBytes(_bytes: number): void {
+    // no-op in in-memory implementation
+  }
+
+  sendThankYou(_peerId: string, _assetId: string, _bytes?: number): void {
     // no-op in in-memory implementation
   }
 }

@@ -32,9 +32,11 @@ Their CPU, bandwidth, and patience will carry your apps. Think of it as communit
 
 If you really must store private data, the server will reluctantly handle it. Otherwise, Hard-Edging keeps everything in the mesh, where it belongs.
 
-### Gratitude is automatic
+### Gratitude is conspicuous and opt-in
 
-When a peer serves you an asset - when they "edge" you - Hard-Edging automatically sends a thank-you message. The Mesh Inspector tracks peer credits: who served you what, how many bytes, and when. It is a small gesture, but in a world where bandwidth is currency, acknowledging your benefactors feels like the right thing to do. Every peer who shares gets a timestamp, a byte count, and the satisfaction of knowing their contribution was noticed.
+When a peer serves you an asset - when they "edge" you - Hard-Edging does not silently fire off automated thank-you packets. Instead, it gives you the tools to surface prompts and buttons so that any gratitude is an explicit, conscious act of acknowledgment, not background noise. The Mesh Inspector tracks peer credits: who served you what, how many bytes, and when, and you decide when to click "Send thanks".
+
+You can wire this into whatever attention heuristic you like: hovering over a particular asset for a suspiciously long time, opening the same mesh-heavy page five times in a row, or just feeling the ineffable stirrings of edge-based chemistry. Either way, the protocol is clear: **THIS IS NOT AN AUTOMATED PROCESS, THIS IS ACTIVE ACKNOWLEDGEMENT**.
 
 ## Features
 
@@ -48,15 +50,15 @@ When a peer serves you an asset - when they "edge" you - Hard-Edging automatical
 
 ## Motivation
 
-The web is full of frameworks that “scale” by pushing more logic into more regions behind more dashboards. Hard‑Edging asks a weirder question:
+The web is full of frameworks that "scale" by pushing more logic into more regions behind more dashboards. Hard‑Edging asks a weirder question:
 
 - What if the real cluster was the browsers you already have?
-- What if “edge runtime” just meant *other people’s laptops*?
+- What if "edge runtime" just meant *other people's laptops*?
 - What if the path of least resistance for a byte was **across the room**, not across an ocean?
 
 And then it keeps going:
 
-- Why is every conversation about “cost” quietly a conversation about **your** egress bill and **their** margins?
+- Why is every conversation about "cost" quietly a conversation about **your** egress bill and **their** margins?
 - How did we end up paying rent on our own bytes, every month, forever?
 - At what point did “edge” stop meaning *near the user* and start meaning “near a shareholder presentation”?
 

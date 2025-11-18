@@ -1,8 +1,10 @@
 import React from 'react';
 import { useMesh } from '../hooks/useMesh';
+import { useHardEdging } from '../context';
 
 export const MeshInspector: React.FC = () => {
   const { stats, peers } = useMesh();
+  const { assetClient } = useHardEdging();
   const totalBytes = stats.bytesFromOrigin + stats.bytesReceivedP2P;
   const edgeRatio = totalBytes === 0 ? 0 : stats.bytesReceivedP2P / totalBytes;
   const edgePercent = Math.round(edgeRatio * 100);
@@ -229,11 +231,11 @@ export const MeshInspector: React.FC = () => {
               marginTop: '2rem'
             }}
           >
-            <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: '#d97706' }}>
-              🙏 Peers Who Edged You
-            </h2>
+            <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: '#d97706' }}>🙏 Peers Who Edged You</h2>
             <p style={{ fontSize: '0.85rem', color: '#b0b0b0', marginBottom: '1rem' }}>
-              These peers have served you assets. They've been automatically thanked for their service.
+              These peers have served you assets. Any thanks you send are explicit, opt-in acts of mesh etiquette,
+              not automated spam. Repeatedly thanking the same peer may or may not be a form of extremely niche
+              edge-speed dating.
             </p>
             <div
               style={{
@@ -273,13 +275,51 @@ export const MeshInspector: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem', color: '#e0e0e0' }}>
-                      <div>
-                        <span style={{ opacity: 0.7 }}>Assets:</span> {credit.assetsReceived}
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '1rem',
+                        fontSize: '0.85rem',
+                        color: '#e0e0e0',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <div style={{ display: 'flex', gap: '1rem' }}>
+                        <div>
+                          <span style={{ opacity: 0.7 }}>Assets:</span> {credit.assetsReceived}
+                        </div>
+                        <div>
+                          <span style={{ opacity: 0.7 }}>Bytes:</span>{' '}
+                          {(credit.bytesReceived / 1024).toFixed(2)} KB
+                        </div>
                       </div>
-                      <div>
-                        <span style={{ opacity: 0.7 }}>Bytes:</span> {(credit.bytesReceived / 1024).toFixed(2)} KB
-                      </div>
+                      <button
+                        type="button"
+                        style={{
+                          padding: '0.4rem 0.75rem',
+                          borderRadius: '999px',
+                          border: '1px solid rgba(250, 204, 21, 0.7)',
+                          background: 'rgba(250, 204, 21, 0.08)',
+                          color: '#fde68a',
+                          fontSize: '0.8rem',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap'
+                        }}
+                        onClick={() => {
+                          if (
+                            typeof window !== 'undefined' &&
+                            window.confirm(
+                              `You seem to really enjoy assets flowing from ${credit.peerId}. Send them a thank you?`
+                            )
+                          ) {
+                            assetClient.sendThankYou(credit.peerId, 'mesh-inspector-appreciation', credit.bytesReceived);
+                          }
+                        }}
+                      >
+                        Send thanks
+                      </button>
                     </div>
                   </div>
                 ))}
