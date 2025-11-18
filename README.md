@@ -281,7 +281,7 @@ The answers are left as an exercise to the reader (and, possibly, to their lawye
 
 ## Disclaimer
 
-Yes, we know this is not the most cost‑effective framework in some abstract sense.
+Yes, I know this is not the most cost‑effective framework in some abstract sense.
 
 Yes, your users' bandwidth and CPU may silently resent you.
 
@@ -298,6 +298,6 @@ But it works. It even works in more browsers than some apocryphal* “modern” 
 - *browser‑cooperative edge consensus*: completely made‑up phrase for “browsers talk to each other until they agree who has the file”.
 - *meshocratic deployment*: governance model in which your deployment strategy is “whoever has the asset wins”.
 - *tab‑sourced CDN cosplay*: when your users’ tabs pretend to be a global content distribution network, with none of the legal paperwork.
-- *apocryphal*: polite term for “we could not find the original spec, but everyone says it existed”.
+- *apocryphal*: polite term for “I could not find the original spec, but everyone says it existed”.
 
 
