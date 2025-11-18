@@ -24,7 +24,7 @@ But the real work happens in the browsers, staring at each other across the netw
 
 ---
 
-## Why this exists (and why it probably should not)
+## Why this exists
 
 If you have worked on the web long enough, you have had this conversation:
 
