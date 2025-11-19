@@ -20,7 +20,7 @@ Your server is still there, somewhere, behaving itself as:
 - a reluctant source of “truth” when the mesh fails
 - a place to put secrets
 
-But the real work happens in the browsers, staring at each other across the network like slightly overcommitted houseplants, trading assets and state.
+But the real work happens in the browsers, staring at each other across the network, trading assets and state.
 
 ---
 
