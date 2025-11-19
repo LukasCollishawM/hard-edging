@@ -12,7 +12,7 @@ Hard-Edging is a peer‑first web framework where **every front‑end asset trie
 - JS bundles and chunks
 - CSS
 - images, fonts, emoji sheets
-- videos, JSON blobs, whatever else you keep apologising for in performance reviews
+- videos, JSON blobs
 
 Your server is still there, somewhere, behaving itself as:
 
