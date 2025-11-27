@@ -285,8 +285,6 @@ Yes, I know this is not the most cost‑effective framework in some abstract sen
 
 Yes, your users' bandwidth and CPU may silently resent you.
 
-Yes, the README might make you question whether this is serious.
-
 But it works. It even works in more browsers than some apocryphal* “modern” stacks, which is both comforting and mildly concerning.
 
 ---
