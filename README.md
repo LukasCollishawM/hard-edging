@@ -93,7 +93,6 @@ Hard-Edging politely volunteers them for light CDN duty:
 
 - **CPU**: doing some extra crypto and compression
 - **bandwidth**: serving assets to nearby peers
-- **attention**: occasionally being asked whether they would like to thank a particularly generous peer
 
 If this feels exploitative, remember: the same machines are already rendering three separate client‑side routers and a partridge in a component tree.
 
